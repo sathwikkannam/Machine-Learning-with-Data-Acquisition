@@ -44,3 +44,13 @@ def get_set(folder, positions: list[str] = None, aslist=True):
 
 def display_accuracy(valid, test):
     print(f"Validation set accuracy: {valid}\nTest set accuracy: {test}")
+
+
+def scatter_plot(sets: list[pd.DataFrame]):
+    ax = None
+    colors = ['r', 'g', 'b', 'c', 'm', 'y', 'b']
+
+    for i, t in enumerate(sets):
+        ax = t.plot(kind='scatter', x='ax', y='ay', color=colors[i], label=str(t['class'][0]), ax=ax)
+
+    return ax
