@@ -3,6 +3,7 @@ from sklearn.metrics import confusion_matrix
 import numpy as np
 import pandas as pd
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 acc_names = ['ax', 'ay', 'az']
 rate_gyro_names = ['gx', 'gy', 'gz']
@@ -54,3 +55,36 @@ def scatter_plot(sets: list[pd.DataFrame]):
         ax = t.plot(kind='scatter', x='ax', y='ay', color=colors[i], label=str(t['class'][0]), ax=ax)
 
     return ax
+
+
+def plot_loss_accuracy(history, name=""):
+    plt.style.use('ggplot')
+
+    # Training set
+    plt.figure(figsize=(15, 5))
+    plt.title(f'{name} - loss and accuracy', fontsize=16, fontname='Arial')
+    plt.plot(history[f'loss'], label=f'loss', linestyle='--', linewidth=2, color='blue')
+    plt.plot(history[f'accuracy'], label=f'accuracy', linestyle='-', linewidth=2, color='red')
+    plt.xlabel('Epochs', fontsize=12, fontname='Arial')
+    plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+    # Validation set
+    plt.figure(figsize=(15, 5))
+    plt.title(f'{name} - val_loss and val_accuracy', fontsize=16, fontname='Arial')
+    plt.plot(history[f'val_loss'], label=f'val_loss', linestyle='--', linewidth=2, color='blue')
+    plt.plot(history[f'val_accuracy'], label=f'val_accuracy', linestyle='-', linewidth=2, color='red')
+    plt.xlabel('Epochs', fontsize=12, fontname='Arial')
+    plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
+    plt.grid(True)
+    plt.legend()
+    plt.show()
+
+
+def display_loss_accuracy(scores, title=None):
+    if title:
+        print(f"title={title}")
+
+    print(f"loss: {scores[0]} accuracy: {scores[1]}")
