@@ -57,43 +57,44 @@ def scatter_plot(sets: list[pd.DataFrame]):
     return ax
 
 
-def plot_loss_accuracy(history, name="", on_same_graph=False):
+def plot_loss_accuracy(history, name="", same_graph=False):
     plt.style.use('ggplot')
 
-    # Training set
-    plt.figure(figsize=(15, 5))
-    plt.grid(True)
-    plt.legend()
-
-    if on_same_graph:
-        plt.title(f'{name} - Train and validation', fontsize=16, fontname='Arial')
-    else:
-        plt.title(f'{name} - loss and accuracy', fontsize=16, fontname='Arial')
-
-    plt.xlabel('Epochs', fontsize=12, fontname='Arial')
-    plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
-
-    plt.plot(history[f'loss'], label=f'loss', linestyle='--', linewidth=2, color='red')
-    plt.plot(history[f'accuracy'], label=f'accuracy', linestyle='-', linewidth=2, color='blue')
-
-    if on_same_graph:
-        plt.plot(history[f'val_loss'], label=f'val_loss', linestyle='--', linewidth=2, color='orange')
-        plt.plot(history[f'val_accuracy'], label=f'val_accuracy', linestyle='-', linewidth=2, color='green')
+    if same_graph:
+        # Both training and validation in the same plot
+        plt.figure(figsize=(15, 5))
+        plt.title(f'{name} - Training and Validation', fontsize=16, fontname='Arial')
+        plt.plot(history[f'loss'], label=f'loss', linestyle='--', linewidth=2, color='blue')
+        plt.plot(history[f'accuracy'], label=f'accuracy', linestyle='-', linewidth=2, color='red')
+        plt.plot(history[f'val_loss'], label=f'val_loss', linestyle='-.', linewidth=2, color='cyan')
+        plt.plot(history[f'val_accuracy'], label=f'val_accuracy', linestyle=':', linewidth=2, color='magenta')
+        plt.xlabel('Epochs', fontsize=12, fontname='Arial')
+        plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
+        plt.grid(True)
+        plt.legend()
         plt.show()
-        return
+    else:
+        # Training set
+        plt.figure(figsize=(15, 5))
+        plt.title(f'{name} - loss and accuracy', fontsize=16, fontname='Arial')
+        plt.plot(history[f'loss'], label=f'loss', linestyle='--', linewidth=2, color='blue')
+        plt.plot(history[f'accuracy'], label=f'accuracy', linestyle='-', linewidth=2, color='red')
+        plt.xlabel('Epochs', fontsize=12, fontname='Arial')
+        plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
+        plt.grid(True)
+        plt.legend()
+        plt.show()
 
-    plt.show()
-
-    # Validation set
-    plt.figure(figsize=(15, 5))
-    plt.title(f'{name} - val_loss and val_accuracy', fontsize=16, fontname='Arial')
-    plt.plot(history[f'val_loss'], label=f'val_loss', linestyle='--', linewidth=2, color='red')
-    plt.plot(history[f'val_accuracy'], label=f'val_accuracy', linestyle='-', linewidth=2, color='blue')
-    plt.xlabel('Epochs', fontsize=12, fontname='Arial')
-    plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
-    plt.grid(True)
-    plt.legend()
-    plt.show()
+        # Validation set
+        plt.figure(figsize=(15, 5))
+        plt.title(f'{name} - val_loss and val_accuracy', fontsize=16, fontname='Arial')
+        plt.plot(history[f'val_loss'], label=f'val_loss', linestyle='--', linewidth=2, color='blue')
+        plt.plot(history[f'val_accuracy'], label=f'val_accuracy', linestyle='-', linewidth=2, color='red')
+        plt.xlabel('Epochs', fontsize=12, fontname='Arial')
+        plt.ylabel('Loss / Accuracy', fontsize=12, fontname='Arial')
+        plt.grid(True)
+        plt.legend()
+        plt.show()
 
 
 def display_loss_accuracy(scores, title=None):
