@@ -10,15 +10,15 @@ rate_gyro_names = ['gx', 'gy', 'gz']
 sensors = ["Accelerometer", "Gyroscope"]
 
 
-def sns_cm(y_true, y_pred):
+def sns_cm(y_true, y_pred, labels=None):
     sns.heatmap(
         confusion_matrix(y_true=y_true, y_pred=y_pred),
         annot=True, fmt='d',
         cmap='Blues',
-        cbar=False,
+        cbar=True,
         square=True,
-        xticklabels=np.unique(y_true),
-        yticklabels=np.unique(y_true)
+        xticklabels=np.unique(y_true) if not labels else labels,
+        yticklabels=np.unique(y_true) if not labels else labels
     )
 
 
@@ -95,10 +95,3 @@ def plot_loss_accuracy(history, name="", same_graph=False):
         plt.grid(True)
         plt.legend()
         plt.show()
-
-
-def display_loss_accuracy(scores, title=None):
-    if title:
-        print(f"title={title}")
-
-    print(f"loss: {scores[0]} accuracy: {scores[1]}")
